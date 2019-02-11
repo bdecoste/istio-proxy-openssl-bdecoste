@@ -163,14 +163,11 @@ class EvpPkeyGetter : public WithStatus {
       UpdateStatus(Status::PEM_PUBKEY_BAD_BASE64);
       return nullptr;
     }
-
     //auto rsa = bssl::UniquePtr<RSA>(
-    //RSA_public_key_from_bytes(CastToUChar(pkey_der), pkey_der.length()));
-    
+    //    RSA_public_key_from_bytes(CastToUChar(pkey_der), pkey_der.length()));
     RSA* rsa(RSA_new());
     const unsigned char *pp = (const unsigned char *)pkey_der.c_str();
     d2i_RSAPublicKey(&rsa, &pp, pkey_der.length());
-
     if (!rsa) {
       UpdateStatus(Status::PEM_PUBKEY_PARSE_ERROR);
     }
@@ -196,7 +193,6 @@ class EvpPkeyGetter : public WithStatus {
     }
     //bssl::UniquePtr<BIGNUM> bn_x = BigNumFromBase64UrlString(x);
     //bssl::UniquePtr<BIGNUM> bn_y = BigNumFromBase64UrlString(y);
-
     BIGNUM* bn_x = BigNumFromBase64UrlString(x);
     BIGNUM* bn_y = BigNumFromBase64UrlString(y);
 
@@ -233,8 +229,8 @@ class EvpPkeyGetter : public WithStatus {
     return key;
   }
 
-//  bssl::UniquePtr<BIGNUM> BigNumFromBase64UrlString(const std::string &s) {
-BIGNUM* BigNumFromBase64UrlString(const std::string &s) {
+  //  bssl::UniquePtr<BIGNUM> BigNumFromBase64UrlString(const std::string &s) {
+  BIGNUM* BigNumFromBase64UrlString(const std::string &s) {
     std::string s_decoded = Base64UrlDecode(s);
     if (s_decoded == "") {
       return nullptr;
@@ -249,25 +245,20 @@ BIGNUM* BigNumFromBase64UrlString(const std::string &s) {
     // It crash if RSA object couldn't be created.
     assert(rsa);
 
-    int result;
-    //bssl::UniquePtr<BIGNUM> rsa_n = BigNumFromBase64UrlString(n);
-    //bssl::UniquePtr<BIGNUM> rsa_e = BigNumFromBase64UrlString(e);
+    //rsa->n = BigNumFromBase64UrlString(n).release();
+    //rsa->e = BigNumFromBase64UrlString(e).release();
+
     BIGNUM* rsa_n = BigNumFromBase64UrlString(n);
     BIGNUM* rsa_e = BigNumFromBase64UrlString(e);
 
+    //if (!rsa->n || !rsa->e) {
     if (!rsa_n || !rsa_e) {
-
-      //BN_free(rsa_n);
-      //BN_free(rsa_e);
-
       // RSA public key field is missing or has parse error.
       UpdateStatus(Status::JWK_RSA_PUBKEY_PARSE_ERROR);
       return nullptr;
     }
-    result = RSA_set0_key(rsa.get(), rsa_n, rsa_e, nullptr);
 
-    //BN_free(rsa_n);
-    //BN_free(rsa_e);
+    int result = RSA_set0_key(rsa.get(), rsa_n, rsa_e, nullptr);
 
     return rsa;
   }
@@ -406,19 +397,17 @@ bool Verifier::VerifySignatureEC(EC_KEY *key, const uint8_t *signature,
     return false;
   }
 
+  //BN_bin2bn(signature, 32, ecdsa_sig->r);
+  //BN_bin2bn(signature + 32, 32, ecdsa_sig->s);
+
   BIGNUM* pr(BN_new());
   BIGNUM* ps(BN_new());
-
   BN_bin2bn(signature, 32, pr);
   BN_bin2bn(signature + 32, 32, ps);
-;
   ECDSA_SIG_set0(ecdsa_sig.get(), pr, ps);
 
-  bool verified = (ECDSA_do_verify(digest, SHA256_DIGEST_LENGTH, ecdsa_sig.get(), key) ==
+  return (ECDSA_do_verify(digest, SHA256_DIGEST_LENGTH, ecdsa_sig.get(), key) ==
           1);
-
-  return verified;
-
 }
 
 bool Verifier::VerifySignatureEC(EC_KEY *key, const std::string &signature,
@@ -439,6 +428,7 @@ bool Verifier::Verify(const Jwt &jwt, const Pubkeys &pubkeys) {
     UpdateStatus(pubkeys.GetStatus());
     return false;
   }
+
   std::string signed_data =
       jwt.header_str_base64url_ + '.' + jwt.payload_str_base64url_;
   bool kid_alg_matched = false;
