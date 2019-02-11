@@ -3,11 +3,13 @@ set -x
 SOURCE_DIR=$1
 TARGET=$2
 
-pushd ${SOURCE_DIR}
-  git fetch upstream
-  git checkout master
-  git reset --hard upstream/master
-popd
+if [ "${GIT_RESET}" == "true" ]; then
+  pushd ${SOURCE_DIR}
+    git fetch upstream
+    git checkout master
+    git reset --hard upstream/master
+  popd
+fi
 
 if [ "$TARGET" == "RESET" ]; then
   exit
@@ -62,11 +64,11 @@ ADD_TEXT="new_local_repository(
 "
 replace_text
 
-sed -i "s|envoyproxy/envoy|bdecoste/envoy|g" ${SOURCE_DIR}/istio_deps
-sed -i "s|b3be5713f2100ab5c40316e73ce34581245bd26a|555f02df4d4b3a59a2e54699e22ac4fa2263fdf7|g" ${SOURCE_DIR}/istio_deps
-sed -i "s|b3be5713f2100ab5c40316e73ce34581245bd26a|555f02df4d4b3a59a2e54699e22ac4fa2263fdf7|g" ${SOURCE_DIR}/WORKSPACE
-sed -i "s|79629284ae143d66b873c08883dc6382fac2e8ed45f6f3521f7e7282b6650216|b602c0c5a12107c94471c6840fa52a61236f86895f978aff811597ce0a33ee58|g" ${SOURCE_DIR}/WORKSPACE
-sed -i "s|https://github.com/envoyproxy/envoy/archive/|https://github.com/bdecoste/envoy/archive/|g" ${SOURCE_DIR}/WORKSPACE
+#sed -i "s|envoyproxy/envoy|bdecoste/envoy|g" ${SOURCE_DIR}/istio_deps
+#sed -i "s|b3be5713f2100ab5c40316e73ce34581245bd26a|555f02df4d4b3a59a2e54699e22ac4fa2263fdf7|g" ${SOURCE_DIR}/istio_deps
+#sed -i "s|b3be5713f2100ab5c40316e73ce34581245bd26a|555f02df4d4b3a59a2e54699e22ac4fa2263fdf7|g" ${SOURCE_DIR}/WORKSPACE
+#sed -i "s|79629284ae143d66b873c08883dc6382fac2e8ed45f6f3521f7e7282b6650216|b602c0c5a12107c94471c6840fa52a61236f86895f978aff811597ce0a33ee58|g" ${SOURCE_DIR}/WORKSPACE
+#sed -i "s|https://github.com/envoyproxy/envoy/archive/|https://github.com/bdecoste/envoy/archive/|g" ${SOURCE_DIR}/WORKSPACE
 
 OPENSSL_LIB="
 envoy_cc_library(
