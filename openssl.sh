@@ -30,6 +30,8 @@ if [ "$TARGET" == "BORINGSSL" ]; then
   exit
 fi
 
+/usr/bin/cp external_tests.sh ${SOURCE_DIR}
+
 /usr/bin/cp -rf src/envoy/tcp/sni_verifier/* ${SOURCE_DIR}/src/envoy/tcp/sni_verifier/
 /usr/bin/cp -rf src/envoy/http/jwt_auth/* ${SOURCE_DIR}/src/envoy/http/jwt_auth/
 
