@@ -31,6 +31,7 @@ if [ "$TARGET" == "BORINGSSL" ]; then
 fi
 
 /usr/bin/cp external_tests.sh ${SOURCE_DIR}
+/usr/bin/cp bazelignore ${SOURCE_DIR}/.bazelignore
 
 /usr/bin/cp -rf src/envoy/tcp/sni_verifier/* ${SOURCE_DIR}/src/envoy/tcp/sni_verifier/
 /usr/bin/cp -rf src/envoy/http/jwt_auth/* ${SOURCE_DIR}/src/envoy/http/jwt_auth/
