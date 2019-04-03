@@ -67,11 +67,8 @@ ADD_TEXT="new_local_repository(
 "
 replace_text
 
-#sed -i "s|envoyproxy/envoy|bdecoste/envoy|g" ${SOURCE_DIR}/istio_deps
-#sed -i "s|b3be5713f2100ab5c40316e73ce34581245bd26a|555f02df4d4b3a59a2e54699e22ac4fa2263fdf7|g" ${SOURCE_DIR}/istio_deps
-#sed -i "s|b3be5713f2100ab5c40316e73ce34581245bd26a|555f02df4d4b3a59a2e54699e22ac4fa2263fdf7|g" ${SOURCE_DIR}/WORKSPACE
-#sed -i "s|79629284ae143d66b873c08883dc6382fac2e8ed45f6f3521f7e7282b6650216|b602c0c5a12107c94471c6840fa52a61236f86895f978aff811597ce0a33ee58|g" ${SOURCE_DIR}/WORKSPACE
-#sed -i "s|https://github.com/envoyproxy/envoy/archive/|https://github.com/bdecoste/envoy/archive/|g" ${SOURCE_DIR}/WORKSPACE
+sed -i "s|925810d00b0d3095a8e67fd4e04e0f597ed188bb|8912fa36acdf4367d37998d98cead376762d2b49|g" ${SOURCE_DIR}/WORKSPACE
+sed -i "s|26d1f14e881455546cf0e222ec92a8e1e5f65cb2c5761d63c66598b39cd9c47d|4a87094ef0a113a66baa5841cc19a0eb8524e2078cf9b495ce3f950705c63905|g" ${SOURCE_DIR}/WORKSPACE
 
 OPENSSL_LIB="
 envoy_cc_library(
