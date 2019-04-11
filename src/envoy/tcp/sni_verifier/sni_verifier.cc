@@ -50,7 +50,6 @@ Config::Config(Stats::Scope& scope, size_t max_client_hello_size)
   auto tlsext_servername_cb = +[](SSL* ssl, int* out_alert, void* arg) -> int {
     Filter* filter = static_cast<Filter*>(SSL_get_app_data(ssl));
     if (filter != nullptr) {
-      int type = SSL_get_servername_type(ssl);
       absl::string_view servername = SSL_get_servername(ssl, TLSEXT_NAMETYPE_host_name);
 
       filter->onServername(servername);
