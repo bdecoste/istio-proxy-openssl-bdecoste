@@ -24,8 +24,13 @@ build --cxxopt -Wno-error=deprecated-declarations
 build --cxxopt -Wno-error=unused-variable
 build --cxxopt -w
 build --cxxopt -ldl
+build --cxxopt -fPIE
 build --cxxopt -pie
+build --cxxopt -fcf-protection
+build --cxxopt -fstack-clash-protection
 build --cxxopt -fplugin=annobin
+build --cxxopt -fstack-protector-all
+build --cxxopt -fstack-protector-strong
 "
 echo "${BUILD_OPTIONS}" >> ${SOURCE_DIR}/.bazelrc
 
