@@ -25,6 +25,7 @@ build --cxxopt -Wno-error=unused-variable
 build --cxxopt -w
 build --cxxopt -ldl
 build --cxxopt -fPIE
+build --cxxopt -fPIC
 build --cxxopt -pie
 build --cxxopt -fcf-protection
 build --cxxopt -fstack-clash-protection
