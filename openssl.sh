@@ -18,6 +18,7 @@ fi
 BUILD_OPTIONS="
 build --cxxopt -D_GLIBCXX_USE_CXX11_ABI=1
 build --cxxopt -DENVOY_IGNORE_GLIBCXX_USE_CXX11_ABI_ERROR=1
+build --cxxopt -D_FORTIFY_SOURCE=2
 build --cxxopt -Wno-error=old-style-cast
 build --cxxopt -Wno-error=deprecated-declarations
 build --cxxopt -Wno-error=unused-variable
