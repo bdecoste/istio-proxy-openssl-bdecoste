@@ -24,6 +24,8 @@ build --cxxopt -Wno-error=deprecated-declarations
 build --cxxopt -Wno-error=unused-variable
 build --cxxopt -w
 build --cxxopt -ldl
+build --cxxopt -pie
+build --cxxopt -fplugin=annobin
 "
 echo "${BUILD_OPTIONS}" >> ${SOURCE_DIR}/.bazelrc
 
