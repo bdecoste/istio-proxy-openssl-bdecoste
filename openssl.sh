@@ -33,6 +33,7 @@ build --cxxopt -fplugin=annobin
 build --cxxopt -fstack-protector-all
 build --cxxopt -fstack-protector-strong
 build --linkopt -pie
+build --linkopt -pic
 "
 echo "${BUILD_OPTIONS}" >> ${SOURCE_DIR}/.bazelrc
 
